@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        h1 {
+            font-size: 50px;
+            margin-top: 20%;
+        }
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+        #bingo-title {
+            color: #333;
+            text-align: center;
+        }
+        #number {
+        font-size: 100px;
+        margin: 50px;
+        }
+        button {
+            font-size: 20px;
+            padding: 10px 30px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <h1 id="bingo-title">ビンゴ抽選</h1>
+    <div style="text-align: center;">
+        <div id="number">---</div>
+    </div>
+
+    <div style="text-align: center;">
+        <button onclick="startShuffle()">スタート</button>
+        <button onclick="stopShuffle()">ストップ</button>
+    </div>
+
+    <!-- BGM -->
+    <audio id="bgm" src="bgm.mp3" loop></audio>
+
+    <script>
+        const numberElement = document.getElementById('number');
+        const bgm = document.getElementById('bgm');
+        let shuffleInterval;
+
+        function startShuffle() {
+            if (!bgm.paused) return; // すでに再生中の場合は何もしない
+            bgm.play();
+            shuffleInterval = setInterval(() => {
+                const randomNum = Math.floor(Math.random() * 75) + 1; // 1から75のランダムな数
+                numberElement.textContent = randomNum;
+            }, 100); // 100msごとに数字を更新
+        }
+
+        function stopShuffle() {
+            clearInterval(shuffleInterval);
+            bgm.pause();
+            bgm.currentTime = 0; // BGMを最初に戻す
+        }
+    </script>
+
+</body>
+</html>
